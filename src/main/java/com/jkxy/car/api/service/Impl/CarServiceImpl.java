@@ -43,4 +43,26 @@ public class CarServiceImpl implements CarService {
     public void insertCar(Car car) {
         carDao.insertCar(car);
     }
+
+    @Override
+    public List<Car> buyCar(String carName, int carNumber) {
+        List<Car> cars = carDao.findByCarName(carName);
+        if (cars != null && cars.size() >= carNumber ) {
+            for (Car car : cars
+                 ) {
+                carDao.deleteById(car.getId());
+            }
+            return cars;
+        }
+        return null;
+    }
+
+    @Override
+    public List<Car> queryCar(String carName, int start, int end) {
+        List<Car> cars = carDao.findByCarName(carName);
+        if (cars != null && cars.size() >= start ) {
+            return cars.subList(start, end);
+        }
+        return null;
+    }
 }

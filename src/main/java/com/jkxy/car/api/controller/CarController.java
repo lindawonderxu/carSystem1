@@ -85,4 +85,18 @@ public class CarController {
         carService.insertCar(car);
         return JSONResult.ok();
     }
+
+    @GetMapping("buyCar/{carName}/{carNumber}")
+    public JSONResult buyCar(@PathVariable String carName, @PathVariable int carNumber) {
+        List<Car> cars = carService.buyCar(carName, carNumber);
+        if (cars != null) return JSONResult.ok(cars);
+        return JSONResult.errorTokenMsg("Sold OUT.");
+    }
+
+    @GetMapping("queryCar/{carName}/{start}/{end}")
+    public JSONResult queryCar(@PathVariable String carName, @PathVariable int start, @PathVariable int end) {
+        List<Car> cars = carService.queryCar(carName, start, end);
+        if (cars != null) return JSONResult.ok(cars);
+        return JSONResult.errorTokenMsg("Not Found.");
+    }
 }
